@@ -1,5 +1,7 @@
 import React from "react";
 import { Button, Text, View } from "react-native";
-const ProfileScreen = ({ navigation }) => {};
+const Landing = ({ navigation }) => {
+  return <Text>hey</Text>;
+};
 
-export default ProfileScreen;
+export default Landing;

@@ -1,42 +1,66 @@
 import React from "react";
-import { StyleSheet, Button, Text, View, TextInput } from "react-native";
-import { useState } from "react";
+import { StyleSheet, Button, Text, View, TextInput, Alert } from "react-native";
+import { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { AppDispatch, RootState } from "../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { loginHandler } from "../redux/reducers/auth";
 
-const [pass, setpass];
 const HomeScreen = ({ navigation }) => {
-  return (
-    <View>
-      <TextInput
-        style={{
-          height: 40,
-          margin: 10,
-          padding: 10,
-          borderColor: "grey",
-          borderWidth: 1,
-        }}
-        placeholder="Enter email"
-        placeholderTextColor="black"
-      />
-      <TextInput
-        style={{
-          height: 40,
-          margin: 10,
-          padding: 10,
-          borderColor: "grey",
-          borderWidth: 1,
-        }}
-        placeholder="Enter password"
-        placeholderTextColor="black"
-      />
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch<AppDispatch>();
+  const { authData, loading } = useSelector((state: RootState) => state.auth);
 
-      <Button
-        title="Login"
-        onPress={() => navigation.navigate("Landing", { name: "Jane" })}
-      />
+  function navigateToMain() {
+    navigation.navigate("Landing");
+  }
+
+  function submit() {
+    dispatch(loginHandler({ email, password }));
+  }
+
+  useEffect(() => {
+    console.log(authData, loading);
+    if (!loading && authData.code) {
+      Alert.alert(authData.code);
+    }
+
+    if (!loading && authData.email && authData.userId) {
+      navigateToMain();
+    }
+  }, [dispatch, loading]);
+
+  if (loading) {
+    return <Text>Loading</Text>;
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.textInputContainer}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter email"
+          onChangeText={setEmail}
+          autoCorrect={false}
+          autoFocus={true}
+          autoCapitalization={false}
+          placeholderTextColor="black"
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter password"
+          onChangeText={setPassword}
+          placeholderTextColor="black"
+          secureTextEntry={true}
+        />
+      </View>
+
+      <Button title="Login" onPress={submit} />
 
       <Button
         title="Sign up"
-        onPress={() => navigation.navigate("FavoriteScreen1", { name: "Jane" })}
+        onPress={() => navigation.navigate("Signup", { name: "Jane" })}
       />
     </View>
   );

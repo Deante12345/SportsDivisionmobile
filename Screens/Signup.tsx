@@ -33,6 +33,7 @@ const Signup = ({ navigation }) => {
           onChangeText={setEmail}
           autoCorrect={false}
           autoFocus={true}
+          color="#f194ff"
           autoCapitalization={false}
           placeholderTextColor="black"
         />

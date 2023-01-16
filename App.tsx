@@ -24,7 +24,7 @@ export default function App() {
           <Stack.Screen
             name="Login"
             component={Login}
-            options={{ title: "Elite Division" }}
+            options={{ title: "Sports Division" }}
           />
           <Stack.Screen
             name="Landing"

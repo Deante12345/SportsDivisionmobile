@@ -60,7 +60,7 @@ const HomeScreen = ({ navigation }) => {
 
       <Button
         title="Sign up"
-        onPress={() => navigation.navigate("Signup", { name: "Jane" })}
+        onPress={() => navigation.navigate("SignUp", { name: "Jane" })}
       />
     </View>
   );
